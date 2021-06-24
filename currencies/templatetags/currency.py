@@ -55,6 +55,7 @@ def memoize_nullary(f):
         return func.retval
     return func
 
+
 def get_currency(arg):
     try:
         code = arg()
@@ -76,8 +77,9 @@ def currency_context(context):
     request = context['request']
     currency_code = memoize_nullary(lambda: get_currency_code(request))
 
-    context['CURRENCIES'] = Currency.active.all() # querysets are already lazy
-    context['CURRENCY_CODE'] = currency_code # lazy
-    context['CURRENCY'] = memoize_nullary(lambda: get_currency(currency_code)) # lazy
+    context['CURRENCIES'] = Currency.active.all()  # querysets are already lazy
+    context['CURRENCY_CODE'] = currency_code  # lazy
+    context['CURRENCY'] = memoize_nullary(
+        lambda: get_currency(currency_code))  # lazy
 
     return ''
